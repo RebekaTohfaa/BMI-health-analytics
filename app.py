@@ -120,6 +120,25 @@ with col2:
 
     st.markdown('</div>', unsafe_allow_html=True)
 
+import plotly.graph_objects as go
+
+fig = go.Figure(go.Indicator(
+    mode="gauge+number",
+    value=bmi,
+    title={'text': "BMI Score"},
+    gauge={
+        'axis': {'range': [0, 40]},
+        'bar': {'color': "black"},
+        'steps': [
+            {'range': [0, 18.5], 'color': "#3498db"},
+            {'range': [18.5, 25], 'color': "#2ecc71"},
+            {'range': [25, 30], 'color': "#f1c40f"},
+            {'range': [30, 40], 'color': "#e74c3c"},
+        ],
+    }
+))
+
+st.plotly_chart(fig, use_container_width=True)
 # -------------------------------
 # FOOTER (YOUR BRAND 🔥)
 # -------------------------------
