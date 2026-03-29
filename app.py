@@ -1,6 +1,5 @@
-st.set_page_config(layout="wide")
-
 import streamlit as st
+
 st.set_page_config(layout="wide") 
 if st.screen_width < 768:
     st.write("Using mobile layout")
