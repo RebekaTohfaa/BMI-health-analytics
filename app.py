@@ -144,9 +144,10 @@ with col2:
             }
         ))
 
-        st.plotly_chart(fig, use_container_width=True)
+       
+        st.plotly_chart(fig, use_container_width=True, height=400)
 
-    st.markdown('</div>', unsafe_allow_html=True)
+    st.markdown("<br><br>", unsafe_allow_html=True)
 
 # -------------------------------
 # FOOTER
