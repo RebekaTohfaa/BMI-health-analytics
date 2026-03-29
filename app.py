@@ -1,59 +1,129 @@
 import streamlit as st
 
-st.set_page_config(layout="wide") 
-   
-# 👉 CENTERED TITLE & DESCRIPTION
-st.markdown("<h1 style='text-align: center;'>📊 BMI Calculator</h1>", unsafe_allow_html=True)
-st.markdown("<h4 style='text-align: center;'>Check your Body Mass Index and health category</h4>", unsafe_allow_html=True)
+# -------------------------------
+# PAGE CONFIG
+# -------------------------------
+st.set_page_config(
+    page_title="BMI Analytics Dashboard",
+    layout="wide"
+)
 
-# 👉 CREATE 2 COLUMNS
-col1, col2 = st.columns(2)
+# -------------------------------
+# CUSTOM CSS (for professional UI)
+# -------------------------------
+st.markdown("""
+    <style>
+    .title {
+        text-align: center;
+        font-size: 42px;
+        font-weight: bold;
+    }
+    .subtitle {
+        text-align: center;
+        font-size: 18px;
+        color: gray;
+        margin-bottom: 30px;
+    }
+    .card {
+        padding: 20px;
+        border-radius: 12px;
+        background-color: #f9f9f9;
+        box-shadow: 0px 4px 12px rgba(0,0,0,0.05);
+    }
+    .result-box {
+        padding: 20px;
+        border-radius: 12px;
+        text-align: center;
+        font-size: 22px;
+        font-weight: bold;
+    }
+    </style>
+""", unsafe_allow_html=True)
 
-# 🟦 LEFT SIDE → TABLE
+# -------------------------------
+# TITLE
+# -------------------------------
+st.markdown('<div class="title">📊 BMI Analytics Dashboard</div>', unsafe_allow_html=True)
+st.markdown('<div class="subtitle">Check your Body Mass Index and health category</div>', unsafe_allow_html=True)
+
+# -------------------------------
+# LAYOUT
+# -------------------------------
+col1, col2 = st.columns([1, 1])
+
+# -------------------------------
+# LEFT: BMI TABLE
+# -------------------------------
 with col1:
-    st.markdown("### 📊 BMI Categories")
+    st.markdown('<div class="card">', unsafe_allow_html=True)
+    st.subheader("📋 BMI Categories")
 
-    st.table({
+    bmi_data = {
         "Category": [
-            "Underweight",
-            "Normal",
-            "Overweight",
-            "Obese",
-            "Severely Obese",
-            "Morbidly Obese"
+            "Underweight", "Normal", "Overweight",
+            "Obese", "Severely Obese", "Morbidly Obese"
         ],
         "BMI Range": [
-            "< 18.5",
-            "18.5 - 24.9",
-            "25 - 29.9",
-            "30 - 34.9",
-            "35 - 39.9",
-            "40+"
+            "< 18.5", "18.5 - 24.9", "25 - 29.9",
+            "30 - 34.9", "35 - 39.9", "40+"
         ]
-    })
+    }
 
-# 🟩 RIGHT SIDE → INPUTS + RESULT
+    st.table(bmi_data)
+    st.markdown('</div>', unsafe_allow_html=True)
+
+# -------------------------------
+# RIGHT: INPUT + RESULT
+# -------------------------------
 with col2:
-    st.markdown("### Enter your details")
+    st.markdown('<div class="card">', unsafe_allow_html=True)
+    st.subheader("📥 Enter your details")
 
-    weight = st.number_input("Weight (lbs)", min_value=1.0)
-    height = st.number_input("Height (inches)", min_value=1.0)
+    weight = st.number_input("Weight (lbs)", min_value=1.0, value=150.0)
+    height = st.number_input("Height (inches)", min_value=1.0, value=65.0)
 
     if st.button("Calculate BMI"):
-        BMI = (weight * 703) / (height * height)
 
-        st.write(f"Your BMI: {round(BMI, 2)}")
+        bmi = (weight / (height ** 2)) * 703
 
-        if BMI > 0:
-            if BMI < 18.5:
-                st.warning("You are underweight.")
-            elif BMI < 24.9:
-                st.success("You are Normal Weight.")
-            elif BMI < 29.9:
-                st.warning("You are Overweight.")
-            elif BMI < 34.9:
-                st.error("You are Obese.")
-            elif BMI < 39.9:
-                st.error("You are Severely Obese.")
-            else:
-                st.error("You are Morbidly Obese.")
+        # CATEGORY LOGIC
+        if bmi < 18.5:
+            category = "Underweight"
+            color = "#3498db"
+        elif 18.5 <= bmi < 25:
+            category = "Normal"
+            color = "#2ecc71"
+        elif 25 <= bmi < 30:
+            category = "Overweight"
+            color = "#f1c40f"
+        elif 30 <= bmi < 35:
+            category = "Obese"
+            color = "#e67e22"
+        else:
+            category = "Severely Obese"
+            color = "#e74c3c"
+
+        # RESULT BOX
+        st.markdown(
+            f"""
+            <div class="result-box" style="background-color:{color}; color:white;">
+                Your BMI: {bmi:.2f} <br>
+                Status: {category}
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+        # PROGRESS BAR (VISUAL UPGRADE 🚀)
+        progress = min(bmi / 40, 1.0)
+        st.progress(progress)
+
+    st.markdown('</div>', unsafe_allow_html=True)
+
+# -------------------------------
+# FOOTER (YOUR BRAND 🔥)
+# -------------------------------
+st.markdown("""
+---
+<center>Built by Rebeka | Fashion & Tech Studio</center>
+""", unsafe_allow_html=True)
