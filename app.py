@@ -1,18 +1,23 @@
 import streamlit as st
 
-st.title("📊 BMI Calculator")
+st.set_page_config(page_title="BMI Calculator", page_icon="📊")
 
-# Input
-weight = st.number_input("Enter your weight (lbs)", min_value=1.0)
-height = st.number_input("Enter your height (inches)", min_value=1.0)
+st.title("📊 BMI Calculator")
+st.markdown("### Check your Body Mass Index and health category")
+
+# Input section
+st.subheader("Enter your details")
+
+weight = st.number_input("Weight (lbs)", min_value=1.0)
+height = st.number_input("Height (inches)", min_value=1.0)
 
 # Button
 if st.button("Calculate BMI"):
     BMI = (weight * 703) / (height * height)
 
-    st.write(f"Your BMI is: {BMI:.2f}")
+    st.subheader(f"Your BMI: {BMI:.2f}")
 
-    # Your logic (converted properly)
+    # Category
     if BMI > 0:
         if BMI < 18.5:
             st.warning("You are underweight.")
@@ -26,3 +31,8 @@ if st.button("Calculate BMI"):
             st.error("You are Severely Obese.")
         elif BMI >= 40:
             st.error("You are Morbidly Obese.")
+
+    # Insight section
+    st.markdown("---")
+    st.subheader("📌 Insight")
+    st.write("BMI is a simple indicator used to assess body weight relative to height. It helps identify potential health risks.")
