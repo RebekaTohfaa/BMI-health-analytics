@@ -36,3 +36,19 @@ if st.button("Calculate BMI"):
     st.markdown("---")
     st.subheader("📌 Insight")
     st.write("BMI is a simple indicator used to assess body weight relative to height. It helps identify potential health risks.")
+
+st.markdown("### 📊 BMI Categories")
+
+st.table({
+    "Category": ["Underweight", "Normal", "Overweight", "Obese", "Severely Obese", "Morbidly Obese"],
+    "BMI Range": ["< 18.5", "18.5 - 24.9", "25 - 29.9", "30 - 34.9", "35 - 39.9", "40+"]
+})
+
+if BMI < 18.5:
+    st.info("Consider a balanced diet and consult a healthcare provider.")
+elif BMI < 24.9:
+    st.info("Great! Maintain your healthy lifestyle.")
+elif BMI < 29.9:
+    st.info("Try increasing physical activity and improving diet habits.")
+else:
+    st.info("Consider consulting a healthcare professional for guidance.")
