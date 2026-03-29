@@ -1,9 +1,7 @@
 import streamlit as st
 
 st.set_page_config(layout="wide") 
-if st.screen_width < 768:
-    st.write("Using mobile layout")
-    
+   
 # 👉 CENTERED TITLE & DESCRIPTION
 st.markdown("<h1 style='text-align: center;'>📊 BMI Calculator</h1>", unsafe_allow_html=True)
 st.markdown("<h4 style='text-align: center;'>Check your Body Mass Index and health category</h4>", unsafe_allow_html=True)
