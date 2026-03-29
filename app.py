@@ -45,7 +45,7 @@ st.markdown("""
 # -------------------------------
 st.markdown('<div class="title">📊 BMI Analytics Dashboard</div>', unsafe_allow_html=True)
 st.markdown('<div class="subtitle">Check your Body Mass Index and health category</div>', unsafe_allow_html=True)
-
+st.markdown("<br>", unsafe_allow_html=True)
 # -------------------------------
 # LAYOUT
 # -------------------------------
