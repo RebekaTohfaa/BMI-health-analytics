@@ -39,10 +39,5 @@ Users will be able to enter their height and weight to calculate their BMI insta
 1. Open `BMI_Calculator.ipynb`  
 2. Run all cells  
 
-### Run the Streamlit App (Optional)
-```bash
-streamlit run app.py
-
-
 ## Author
 Rebeka Islam
