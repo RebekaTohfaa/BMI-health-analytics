@@ -125,5 +125,5 @@ with col2:
 # -------------------------------
 st.markdown("""
 ---
-<center>Built by Rebeka | Fashion & Tech Studio</center>
+<center>Built by Rebeka | Fashion Tech Studio</center>
 """, unsafe_allow_html=True)
