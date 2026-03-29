@@ -1,43 +1,45 @@
 import streamlit as st
+import pandas as pd
+import plotly.graph_objects as go
 
 # -------------------------------
 # PAGE CONFIG
 # -------------------------------
-st.set_page_config(
-    page_title="BMI Analytics Dashboard",
-    layout="wide"
-)
+st.set_page_config(page_title="BMI Analytics Dashboard", layout="wide")
 
 # -------------------------------
-# CUSTOM CSS (for professional UI)
+# CUSTOM CSS
 # -------------------------------
 st.markdown("""
-    <style>
-    .title {
-        text-align: center;
-        font-size: 42px;
-        font-weight: bold;
-    }
-    .subtitle {
-        text-align: center;
-        font-size: 18px;
-        color: gray;
-        margin-bottom: 30px;
-    }
-    .card {
-        padding: 20px;
-        border-radius: 12px;
-        background-color: #f9f9f9;
-        box-shadow: 0px 4px 12px rgba(0,0,0,0.05);
-    }
-    .result-box {
-        padding: 20px;
-        border-radius: 12px;
-        text-align: center;
-        font-size: 22px;
-        font-weight: bold;
-    }
-    </style>
+<style>
+.block-container {
+    padding-top: 2rem;
+}
+.title {
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+}
+.subtitle {
+    text-align: center;
+    font-size: 18px;
+    color: gray;
+    margin-bottom: 30px;
+}
+.card {
+    padding: 20px;
+    border-radius: 12px;
+    background-color: #f9f9f9;
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.05);
+}
+.result-box {
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+}
+</style>
 """, unsafe_allow_html=True)
 
 # -------------------------------
@@ -45,14 +47,14 @@ st.markdown("""
 # -------------------------------
 st.markdown('<div class="title">📊 BMI Analytics Dashboard</div>', unsafe_allow_html=True)
 st.markdown('<div class="subtitle">Check your Body Mass Index and health category</div>', unsafe_allow_html=True)
-st.markdown("<br>", unsafe_allow_html=True)
+
 # -------------------------------
 # LAYOUT
 # -------------------------------
 col1, col2 = st.columns([1, 1])
 
 # -------------------------------
-# LEFT: BMI TABLE
+# LEFT SIDE: BMI TABLE
 # -------------------------------
 with col1:
     st.markdown('<div class="card">', unsafe_allow_html=True)
@@ -69,11 +71,13 @@ with col1:
         ]
     }
 
-    st.table(bmi_data)
+    df = pd.DataFrame(bmi_data)
+    st.dataframe(df, use_container_width=True)
+
     st.markdown('</div>', unsafe_allow_html=True)
 
 # -------------------------------
-# RIGHT: INPUT + RESULT
+# RIGHT SIDE: INPUT + RESULT
 # -------------------------------
 with col2:
     st.markdown('<div class="card">', unsafe_allow_html=True)
@@ -82,8 +86,10 @@ with col2:
     weight = st.number_input("Weight (lbs)", min_value=1.0, value=150.0)
     height = st.number_input("Height (inches)", min_value=1.0, value=65.0)
 
-    if st.button("Calculate BMI"):
+    # Initialize BMI
+    bmi = None
 
+    if st.button("Calculate BMI"):
         bmi = (weight / (height ** 2)) * 703
 
         # CATEGORY LOGIC
@@ -114,33 +120,36 @@ with col2:
             unsafe_allow_html=True
         )
 
-        # PROGRESS BAR (VISUAL UPGRADE 🚀)
+        # PROGRESS BAR
         progress = min(bmi / 40, 1.0)
         st.progress(progress)
+        st.caption("BMI progress relative to maximum scale (40)")
+
+        # -------------------------------
+        # GAUGE CHART (SAFE - NO ERROR)
+        # -------------------------------
+        fig = go.Figure(go.Indicator(
+            mode="gauge+number",
+            value=bmi,
+            title={'text': "BMI Score"},
+            gauge={
+                'axis': {'range': [0, 40]},
+                'bar': {'color': "black"},
+                'steps': [
+                    {'range': [0, 18.5], 'color': "#3498db"},
+                    {'range': [18.5, 25], 'color': "#2ecc71"},
+                    {'range': [25, 30], 'color': "#f1c40f"},
+                    {'range': [30, 40], 'color': "#e74c3c"},
+                ],
+            }
+        ))
+
+        st.plotly_chart(fig, use_container_width=True)
 
     st.markdown('</div>', unsafe_allow_html=True)
 
-import plotly.graph_objects as go
-
-fig = go.Figure(go.Indicator(
-    mode="gauge+number",
-    value=bmi,
-    title={'text': "BMI Score"},
-    gauge={
-        'axis': {'range': [0, 40]},
-        'bar': {'color': "black"},
-        'steps': [
-            {'range': [0, 18.5], 'color': "#3498db"},
-            {'range': [18.5, 25], 'color': "#2ecc71"},
-            {'range': [25, 30], 'color': "#f1c40f"},
-            {'range': [30, 40], 'color': "#e74c3c"},
-        ],
-    }
-))
-
-st.plotly_chart(fig, use_container_width=True)
 # -------------------------------
-# FOOTER (YOUR BRAND 🔥)
+# FOOTER
 # -------------------------------
 st.markdown("""
 ---
