@@ -6,10 +6,9 @@
 
 ## 💡 Project Overview
 
-This project is an interactive BMI (Body Mass Index) calculator built using Python and Streamlit.  
-It allows users to calculate their BMI, understand their health category, and visualize results through an intuitive interface.
+This project is an interactive analytics application that calculates Body Mass Index (BMI) and classifies users into health categories based on standard medical thresholds.
 
-This project demonstrates how simple analytical logic can be transformed into a real-world, user-friendly application.
+The goal was to transform simple calculation logic into a user-friendly, deployable analytics tool, demonstrating how data-driven insights can be delivered through real-time applications.
 
 ---
 
