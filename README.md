@@ -46,9 +46,8 @@ This project demonstrates how simple analytical logic can be transformed into a 
 
 ## 📸 App Screenshot
 
-![BMI App Screenshot](https://via.placeholder.com/800x400.png?text=BMI+App+Screenshot)
+<img width="1918" height="812" alt="image" src="https://github.com/user-attachments/assets/ec91f54d-7247-483c-bc49-723c138ab3a8" />
 
-*(Replace this with your actual screenshot later)*
 
 ---
 
